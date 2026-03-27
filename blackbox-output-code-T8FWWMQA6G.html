@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TesKem SMP - Belajar Akademik Interaktif</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Lobby Section */
+        .lobby {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .guru-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        .guru-image {
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .guru-image::before {
+            content: "👩‍🏫";
+            font-size: 8rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .guru-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1.5" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.8" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: sparkle 2s linear infinite;
+        }
+
+        .guru-dialog {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .guru-dialog::before {
+            content: '💬';
+            position: absolute;
+            top: -10px;
+            left: 30px;
+            font-size: 1.5rem;
+        }
+
+        .menu-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .menu-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .menu-btn:nth-child(2) {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        }
+
+        .menu-btn:nth-child(3) {
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+        }
+
+        .menu-btn:nth-child(4) {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+        }
+
+        /* Subjects Grid */
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .subject-card {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .subject-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .subject-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .subject-card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateX(0) translateY(0) rotate(0deg); }
+            100% { transform: translateX(100px) translateY(100px) rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .lobby {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .guru-image {
+                width: 250px;
+                height: 320px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .menu-btn {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 TesKem SMP</h1>
+            <p class="subtitle">Platform Belajar Tes Kemampuan Akademik SMP</p>
+        </header>
+
+        <section class="lobby">
+            <div class="guru-section">
+                <div class="guru-image"></div>
+                <div class="guru-dialog">
+                    "Halo siswa-siswi SMP! Yuk kita belajar bersama untuk menghadapi tes kemampuan akademik. Pilih mata pelajaran yang ingin kamu pelajari dan kerjakan soal latihan!"
+                </div>
+            </div>
+            
+            <div class="menu-section">
+                <button class="menu-btn" onclick="startTest('Matematika')">🚀 Mulai Tes Matematika</button>
+                <button class="menu-btn" onclick="startTest('Bahasa Indonesia')">📚 Tes Bahasa Indonesia</button>
+                <button class="menu-btn" onclick="startTest('IPA')">🔬 Tes IPA</button>
+                <button class="menu-btn" onclick="startTest('IPS')">🌍 Tes IPS</button>
+            </div>
+        </section>
+
+        <section class="subjects">
+            <div class="subject-card" onclick="openSubject('matematika')">
+                <div class="subject-icon">➗</div>
+                <h3>Matematika</h3>
+                <p>Aljabar, Geometri, Statistika & Aritmatika</p>
+            </div>
+            <div class="subject-card" onclick="openSubject('bahasa')">
+                <div class="subject-icon">📖</div>
+                <h3>Bahasa Indonesia</h3>
+                <p>ESAI, Teks, Kosa Kata & Tata Bahasa</p>
+            </div>
+            <div class="subject-card" onclick="openSubject('ipa')">
+                <div class="subject-icon">🔬</div>
+                <h3>Ilmu Pengetahuan Alam</h3>
+                <p>Fisika, Biologi, Kimia Dasar</p>
+            </div>
+            <div class="subject-card" onclick="openSubject('ips')">
+                <div class="subject-icon">🌍</div>
+                <h3>Ilmu Pengetahuan Sosial</h3>
+                <p>Sejarah, Geografi, Ekonomi</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function startTest(subject) {
+            alert(`Memulai tes ${subject}! Fitur ini akan diimplementasikan dengan soal-soal interaktif.`);
+            // Di sini bisa ditambahkan navigasi ke halaman tes
+        }
+
+        function openSubject(subject) {
+            const subjects = {
+                matematika: 'Soal Matematika: 2x + 5 = 15, x = ?',
+                bahasa: 'Soal Bahasa: Sinonim dari "Cermat" adalah...',
+                ipa: 'Soal IPA: Apa yang dimaksud dengan fotosintesis?',
+                ips: 'Soal IPS: Siapa presiden pertama Indonesia?'
+            };
+            alert(`Materi ${subject.toUpperCase()}:\n${subjects[subject]}`);
+        }
+
+        // Efek klik untuk tombol
+        document.querySelectorAll('.menu-btn, .subject-card').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Partikel background
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: rgba(255,255,255,0.5);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1000;
+                left: ${Math.random() * 100}vw;
+                top: 100vh;
+                animation: fall linear infinite;
+            `;
+            document.body.appendChild(particle);
+
+            particle.animate([
+                { transform: 'translateY(0px)', opacity: 1 },
+                { transform: `translateY(-100vh) rotate(360deg)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+
+        setInterval(createParticle, 300);
+    </script>
+</body>
+</html>
